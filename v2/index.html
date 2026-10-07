@@ -1,0 +1,398 @@
+<!doctype html><html lang="cs" data-idos-theme="light"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Deaktivace pluginů · V2 · Mock</title><style>/* IDOS prototype baseline. Provenance: tokens.json and README.md. */
+:root, [data-idos-theme="light"] {
+  --idos-background: #FFFFFF;
+  --idos-surface: #F4F8FB;
+  --idos-text: #0C2C41;
+  --idos-secondary: #1C415A;
+  --idos-primary: #0171BA;
+  --idos-on-primary: #FFFFFF;
+  --idos-border: 1px solid #E3EEF4;
+  --idos-font: 'Roboto Flex', 'Roboto', Arial, sans-serif;
+  --idos-font-detail: 'Roboto', Arial, sans-serif;
+  --idos-viewport: 360px;
+  --idos-gutter: 16px;
+  --idos-button-height: 56px;
+  --idos-button-radius: 8px;
+  --idos-card-radius: 4px;
+  --idos-chip-height: 32px;
+  --idos-chip-radius: 8px;
+  --idos-icon-circle: 48px;
+  --idos-navigation-height: 80px;
+  --idos-button-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+  --idos-label-size: 14px;
+  --idos-label-line: 16px;
+  --idos-label-weight: 600;
+}
+[data-idos-theme="dark"] {
+  --idos-background: #00101A;
+  --idos-surface: #0C2C41;
+  --idos-text: #FFFFFF;
+  --idos-secondary: #85A5BA;
+  --idos-primary: #009BFF;
+  --idos-on-primary: #00101A;
+  --idos-border: 1px solid #1C415A;
+  --idos-label-size: 16px;
+  --idos-label-line: 19px;
+  --idos-label-weight: 500;
+}
+.idos-screen { box-sizing: border-box; width: 100%; max-width: var(--idos-viewport); background: var(--idos-background); color: var(--idos-text); font: 500 16px/19px var(--idos-font); }
+.idos-screen *, .idos-screen *::before, .idos-screen *::after { box-sizing: inherit; }
+.idos-content { padding-inline: var(--idos-gutter); }
+.idos-button { width: 100%; min-height: var(--idos-button-height); padding: 12px 16px; border: 0; border-radius: var(--idos-button-radius); background: var(--idos-primary); color: var(--idos-on-primary); box-shadow: var(--idos-button-shadow); font: 600 20px/23px var(--idos-font); cursor: pointer; }
+.idos-card { background: var(--idos-surface); border-radius: var(--idos-card-radius); padding: 16px; }
+.idos-label { color: var(--idos-primary); font: var(--idos-label-weight) var(--idos-label-size)/var(--idos-label-line) var(--idos-font); }
+[data-idos-theme="dark"] .idos-label { color: var(--idos-secondary); }
+.idos-title { font: 600 20px/28px var(--idos-font); letter-spacing: -.4px; }
+.idos-station { font: 500 22px/26px var(--idos-font); }
+.idos-chip { min-height: var(--idos-chip-height); padding: 5px 16px; border: var(--idos-border); border-radius: var(--idos-chip-radius); color: var(--idos-secondary); background: transparent; font: 500 16px/19px var(--idos-font); }
+.idos-chip[aria-pressed="true"] { background: var(--idos-primary); border-color: var(--idos-primary); color: var(--idos-on-primary); }
+/* Focus ring and fluid/min-height layout are prototype implementation choices. */
+.idos-screen :focus-visible { outline: 2px solid var(--idos-primary); outline-offset: 3px; }
+
+*{box-sizing:border-box}body{margin:0;background:var(--idos-background);color:var(--idos-text);font:14px/1.5 var(--idos-font)}main{max-width:1440px;margin:auto;padding:28px 30px}header{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:24px}h1{font-size:29px;margin:3px 0 6px;letter-spacing:-.6px}h2{font-size:16px;margin:0}p{margin:0}.eyebrow{font-size:11px;letter-spacing:1.2px;color:var(--idos-primary);font-weight:700}.muted,.footnote{color:var(--idos-secondary);font-size:12px}.footnote{margin:10px 0 16px}.refresh-area{display:grid;justify-items:end;gap:5px}button,input,select,textarea{font:inherit;color:inherit}button{border:var(--idos-border);border-radius:6px;background:var(--idos-background);padding:7px 12px;cursor:pointer}button:hover{border-color:var(--idos-primary)}button:disabled{cursor:default;opacity:.45}.primary{background:var(--idos-primary);border-color:var(--idos-primary);color:var(--idos-on-primary);font-weight:600}button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--idos-primary);outline-offset:2px}[hidden]{display:none!important}nav{display:flex;gap:5px;border-bottom:var(--idos-border);margin-bottom:18px}nav button{border:0;border-radius:6px 6px 0 0;padding:11px 16px;font-weight:600}nav button[aria-selected=true]{background:var(--idos-surface);color:var(--idos-primary);border-bottom:3px solid var(--idos-primary)}.toolbar{display:flex;justify-content:flex-start;align-items:end;gap:16px;flex-wrap:wrap;margin:14px 0}.toolbar .actions{margin-left:auto;display:flex;gap:7px}label{display:grid;gap:5px;font-size:12px;font-weight:600}select{min-height:34px;background:white;border:var(--idos-border);border-radius:5px;padding:5px 9px}.legend{display:flex;gap:18px;align-items:center;flex-wrap:wrap;font-size:12px;margin:17px 0 12px}.legend>span{display:flex;gap:6px;align-items:center}.legend strong{font-size:11px;background:var(--idos-surface);border-radius:12px;padding:1px 7px}.key{width:12px;height:12px;display:inline-block;border:1px solid #bfd1de;border-radius:2px}.new-key{background:#e3f3e7;border-color:#78b18a}.recent-key{background:#e8f2ff;border-color:#76a6d3}.workbook{border:1px solid #bcc9d2;border-radius:4px;overflow:hidden}.sheet-scroll{height:min(58vh,540px);min-height:300px;overflow:auto;background:white}.sheet{border-collapse:separate;border-spacing:0;font:13px/1.4 Calibri,Arial,sans-serif;white-space:nowrap;width:100%;min-width:630px}.sheet th,.sheet td{padding:7px 12px;border-right:1px solid #dbe3e8;border-bottom:1px solid #dbe3e8}.sheet thead th{position:sticky;z-index:2;background:#f1f3f5;color:#384d5b;font-weight:600;top:0}.sheet .letters th{padding:3px 8px;font-size:11px;letter-spacing:.5px;text-align:center;height:25px;border-bottom:1px solid #b7c5ce}.sheet .titles th{top:25px;text-align:left;background:#e5eef5;font-size:12px;height:37px}.sheet .row-number{position:sticky;left:0;width:47px;text-align:right;font-size:11px;color:#657785;background:#f3f5f7;z-index:1;padding:7px 9px}.sheet thead .corner{left:0;z-index:3}.sheet td:nth-child(2){width:22%;color:#243c4c}.sheet td:nth-child(3),.sheet td:nth-child(4){width:30%;font-variant-numeric:tabular-nums}.sheet td:nth-child(5){text-align:center}.sheet tbody tr.recent td{background:#e8f2ff}.sheet tbody tr.recent td:nth-child(3){color:#0171ba;font-weight:600}.sheet tbody tr.new td{background:#e3f3e7}.sheet tbody tr.new td:nth-child(2){border-left:3px solid #3e8c56;padding-left:9px}.sheet tbody tr:hover td{box-shadow:inset 0 0 0 1px #0171ba}.new-badge{font:10px Arial,sans-serif;display:inline-block;margin-left:8px;color:#276b3a;background:#c7e7d0;border-radius:3px;padding:2px 4px;vertical-align:middle}.sheet-footer{display:flex;align-items:center;gap:16px;background:#f3f5f7;padding:0 10px;font-size:11px;color:#536875;min-height:35px}.sheet-name{background:white;color:#0171ba;border-bottom:3px solid #0171ba;padding:8px 14px;font-size:12px;font-weight:600}.pages{margin-left:auto;display:flex;gap:9px;align-items:center}.pages button{padding:1px 9px;font-size:17px;border:0;background:transparent}.empty{padding:40px;text-align:center;color:var(--idos-secondary)}.plugin-bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:20px 0}.plugin-bar>span{font-size:12px;font-weight:600}.plugin-bar>button{font-size:11px;padding:3px 7px}.plugin-bar>div{display:flex;flex-wrap:wrap;gap:6px;width:100%}.plugin-bar label{display:flex;align-items:center;gap:6px;cursor:pointer;font-size:12px;border:var(--idos-border);border-radius:5px;padding:5px 9px}.plugin-bar input{accent-color:var(--idos-primary)}.plugin-bar label:has(input:checked){border-color:var(--idos-primary);color:var(--idos-primary);background:var(--idos-surface)}.pivot-caption{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:22px 0 10px}.pivot-scroll{overflow:auto;max-height:510px;border:var(--idos-border);border-radius:5px}.pivot{border-collapse:collapse;min-width:100%;font-size:12px;white-space:nowrap}.pivot th,.pivot td{padding:9px 12px;border-bottom:var(--idos-border);border-right:var(--idos-border);text-align:right;font-variant-numeric:tabular-nums}.pivot thead th{background:var(--idos-surface);color:var(--idos-text);position:sticky;top:0;z-index:2}.pivot th:first-child,.pivot td:first-child{text-align:left;position:sticky;left:0;background:white;min-width:135px;z-index:1}.pivot thead th:first-child{z-index:3;background:var(--idos-surface)}.pivot .total-row,.pivot .total-row td,.pivot .total-row th{background:#e5eef5;font-weight:700}.pivot .child td:first-child{padding-left:27px;color:#607988}.pivot .date-button{padding:0;border:0;font-size:12px;background:transparent;color:var(--idos-primary);font-weight:600}.pivot .sum{font-weight:600;background:var(--idos-surface)}.heat-scroll{overflow:auto;border:var(--idos-border);border-radius:5px;padding:10px}.heatmap{border-collapse:separate;border-spacing:3px;min-width:880px;width:100%;font-size:11px;text-align:center;table-layout:fixed}.heatmap th,.heatmap td{padding:4px 0;height:30px;font-variant-numeric:tabular-nums}.heatmap td{border-radius:3px}.heatmap th:first-child{width:28px}.source-note{border-top:var(--idos-border);padding-top:15px;margin-top:22px}#notification{border-radius:6px;background:var(--idos-surface);padding:10px 14px;margin-bottom:13px;color:var(--idos-primary);font-size:13px}#notification.error{background:#fff1ec;color:#913717}#copy-fallback{width:100%;height:130px;resize:vertical;border:var(--idos-border);border-radius:5px;padding:10px;font:12px/1.5 Consolas,monospace;background:var(--idos-surface)}@media(max-width:700px){main{padding:18px 14px}header{align-items:flex-start;gap:12px}h1{font-size:24px}.refresh-area{max-width:165px}.refresh-area button{font-size:12px}.refresh-area span{text-align:right;font-size:10px}nav button{font-size:12px;padding:9px 10px}.toolbar{gap:10px}.toolbar .actions{margin-left:0}.legend{gap:10px;font-size:11px}.sheet-footer{gap:6px;padding:0 5px}.sheet-name{padding:8px}.pivot-caption{align-items:start;flex-direction:column;gap:4px}}
+nav.sheet-tabs{position:sticky;bottom:0;z-index:5;background:var(--idos-background);border:1px solid #bcc9d2;border-radius:0 0 4px 4px;gap:0;margin:0 0 18px;padding:0 10px;box-shadow:0 -2px 8px #0c2c4108}nav.sheet-tabs button{font:600 12px/1.4 Calibri,Arial,sans-serif;background:transparent;border-radius:0;padding:11px 14px;border-right:1px solid #dbe3e8}nav.sheet-tabs button[aria-selected=true]{background:var(--idos-background);color:var(--idos-primary);border-bottom:3px solid var(--idos-primary)}.summary-sheet{min-width:1090px;font-size:12px}.summary-sheet td:nth-child(n){width:auto;text-align:left}.summary-sheet td.duration{text-align:right}.summary-sheet .titles th{white-space:normal;height:40px;min-width:65px}.summary-sheet .titles th:nth-child(5){min-width:100px}.summary-sheet tbody tr.recent td:nth-child(3){color:inherit;font-weight:400}.summary-sheet .titles th:last-child{min-width:95px}.summary-sheet td:last-child{min-width:95px}
+.sheet{min-width:860px}.sheet td:nth-child(2){width:19%}.sheet td:nth-child(3),.sheet td:nth-child(4){width:25%}.sheet .duration{text-align:right;font-variant-numeric:tabular-nums}.sheet th:last-child{white-space:normal;min-width:130px}
+
+.mock-bar{background:var(--idos-surface);border-bottom:var(--idos-border)}
+.mock-bar-inner{max-width:1440px;margin:auto;padding:10px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.mock-bar strong{display:block;font-size:13px}.mock-bar small{display:block;font-size:11px;color:var(--idos-secondary)}
+.mock-bar nav{display:flex;gap:6px;margin:0;border:0}.mock-bar a{display:grid;place-items:center;min-width:48px;min-height:44px;border-radius:7px;text-decoration:none;color:var(--idos-primary);font-weight:700;font-size:14px}
+.mock-bar a[aria-current=page]{background:var(--idos-primary);color:var(--idos-on-primary)}
+@media(max-width:700px){
+  body{overflow-wrap:anywhere}main{min-width:0}header,.page-header{flex-direction:column;align-items:stretch}
+  .header-meta,.refresh-area{max-width:none;justify-items:start}.header-meta .actions{justify-content:start}
+  .toolbar,.filter-row,.pivot-controls,.rule-controls{min-width:0}.toolbar label{max-width:100%}
+  input,select{font-size:16px;min-height:44px}button{min-height:44px}.plugin-filters label,.plugin-bar label{min-height:44px}
+  .tabs{flex-wrap:nowrap;overflow-x:auto}.tabs button{flex-shrink:0;white-space:nowrap}
+  nav.sheet-tabs{overflow-x:auto;max-width:100%;padding:0}nav.sheet-tabs button{flex-shrink:0;white-space:nowrap;min-height:48px;padding-inline:12px}
+  .workbook,.sheet-scroll,.pivot-scroll,.heat-scroll,.table-scroll,.raw-grid{max-width:100%;min-width:0;overscroll-behavior-x:contain}
+  .summary-sheet{min-width:1100px}.summary-sheet .titles th{min-width:92px;overflow-wrap:normal}
+  .sheet-footer{flex-wrap:wrap;min-height:44px}.sheet-footer .pages button{min-width:36px}.sheet-scroll{height:55vh;min-height:300px}
+  .filters{padding:14px}.filter-row label{min-width:120px}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .metric .value{font-size:23px}.bar-row{grid-template-columns:48px minmax(0,1fr) 60px}.actions{flex-wrap:wrap;max-width:100%}
+  .pagination{flex-wrap:wrap}.detail-head{gap:10px}.mock-bar-inner{padding-inline:15px}
+}
+
+</style></head><body><div class="mock-bar"><div class="mock-bar-inner"><span><strong>Deaktivace pluginů</strong><small>Mock · vzorová data</small></span><nav aria-label="Verze mocku"><a href="../v1/">V1</a><a href="../v2/" aria-current="page">V2</a></nav></div></div><main>
+<header><div><p class="eyebrow">PROVOZNÍ DOHLED · V2</p><h1>Deaktivace pluginů</h1><p id="source-meta" class="muted"></p><a href="../v1/">Rozšířená V1 · grafy, souhrny a pravidla</a></div><div class="refresh-area"><button id="refresh" hidden class="primary">Aktualizovat data</button><span id="refresh-mode" class="muted"></span></div></header>
+<p id="notification" role="status" hidden></p>
+<section id="panel-summary" aria-label="Deaktivace pluginů">
+<div class="toolbar"><label>Období<select id="summary-period"><option value="month">Poslední měsíc v datech</option><option value="recent">Poslední 3 dny</option><option value="previous">Předchozí měsíc</option><option value="all">Celá historie</option></select></label><label>Plugin<select id="summary-plugin"><option value="">Všechny pluginy</option></select></label><div class="actions"><button id="copy-summary">Kopírovat do Excelu</button><button id="download-summary">CSV</button></div></div>
+<div class="legend"><span><i class="key new-key"></i>Obsahuje nové řádky</span><span><i class="key recent-key"></i>Poslední 3 dny</span><span class="muted">Souhrnná evidence ve formátu Excelu</span></div>
+<div class="workbook"><div class="sheet-scroll" id="summary-table"></div><div class="sheet-footer"><span id="summary-count"></span><div class="pages"><button id="summary-prev">‹</button><span id="summary-page"></span><button id="summary-next">›</button></div></div></div>
+<p class="footnote">Délka je součet jednotlivých cyklů. Důvody výpadků zatím zůstávají prázdné.</p>
+</section>
+<section id="panel-data" aria-label="Surová data" hidden>
+<div class="toolbar"><label>Zobrazit<select id="raw-filter"><option value="all">Všechna data</option><option value="recent">Poslední 3 dny</option><option value="new">Nové od poslední aktualizace</option></select></label><div class="actions"><button id="copy-raw">Kopírovat do Excelu</button><button id="download-raw">CSV</button></div></div>
+<div class="legend"><span><i class="key new-key"></i>Nové od aktualizace <strong id="new-count"></strong></span><span><i class="key recent-key"></i><span id="recent-caption"></span> <strong id="recent-count"></strong></span><span class="muted">Nejnovější nahoře</span></div>
+<div class="workbook"><div class="sheet-scroll" id="raw-table"></div><div class="sheet-footer"><span id="raw-count"></span><div class="pages"><button id="prev">‹</button><span id="page-label"></span><button id="next">›</button></div></div></div>
+<p class="footnote">Kopírování a CSV obsahují všechna surová data. Buňky jsou pouze pro čtení.</p>
+</section>
+<section id="panel-pivot" aria-label="Kontingenční tabulka a heatmapa" hidden>
+<div class="toolbar"><label>Období<select id="period"><option value="month">Poslední měsíc v datech</option><option value="recent">Poslední 3 dny</option><option value="previous">Předchozí měsíc</option><option value="all">Celá historie</option></select></label><label>Hodnota<select id="metric"><option value="minutes">Délka deaktivace (min)</option><option value="cycles">Počet cyklů</option><option value="groups">Počet souhrnných záznamů</option></select></label><button id="copy-pivot">Kopírovat do Excelu</button></div>
+<div class="plugin-bar"><span>Pluginy</span><button id="plugins-all">Všechny</button><button id="plugins-none">Žádný</button><div id="plugins"></div></div>
+<div class="pivot-caption"><h2>Podle dne a pluginu</h2><span id="pivot-count" class="muted"></span></div><div id="pivot-table" class="pivot-scroll"></div>
+<p class="footnote">Kliknutím na datum rozbalíš časy. Tmavší buňka znamená vyšší hodnotu; „+ ?“ neznámou délku.</p>
+<div class="pivot-caption"><h2>Den v týdnu × hodina</h2><span id="heat-unit" class="muted"></span></div><div id="heatmap" class="heat-scroll"></div>
+<p id="rules-note" class="footnote"></p>
+</section>
+<nav class="sheet-tabs" aria-label="Listy přehledu"><button data-panel="data" aria-selected="false">Surová data</button><button data-panel="summary" aria-selected="true">Deaktivace pluginů</button><button data-panel="pivot" aria-selected="false">Kontingenční tabulka a heatmapa</button></nav>
+<p class="footnote source-note">Automatické časy konce jsou plánované. Minuty nejsou potvrzená dostupnost pluginů. Důvody výpadků doplníme později.</p>
+<textarea id="copy-fallback" readonly hidden aria-label="Text ke kopírování"></textarea>
+</main><script>(function (root, factory) {
+  if (typeof module === 'object' && module.exports) module.exports = factory();
+  else root.DeactivationModel = factory();
+})(typeof globalThis !== 'undefined' ? globalThis : this, function () {
+  'use strict';
+  const MINUTE = 60000, DAY = 86400000;
+  const defaults = { gapMinutes: 20, gapBasis: 'start', sameDay: true, manualBarrier: true };
+  const names = { CD: 'ČD', DUK: 'DÚK' };
+  function pluginName(name) { const n = name.replace(/Plugin$/, ''); return names[n] || n; }
+  // Wall-clock values from the CSV are stored on a neutral UTC scale. No
+  // server timezone/offset is inferred; seconds and original text survive.
+  function parseTime(value) {
+    if (!value || value === '-') return null;
+    const m = /^(\d{2})\.(\d{2})\.(\d{4}) (\d{2}):(\d{2}):(\d{2})$/.exec(value);
+    if (!m) return null;
+    const [d, mo, y, h, mi, s] = m.slice(1).map(Number);
+    const ms = Date.UTC(y, mo - 1, d, h, mi, s), dt = new Date(ms);
+    return dt.getUTCFullYear() === y && dt.getUTCMonth() === mo - 1 && dt.getUTCDate() === d && h < 24 && mi < 60 && s < 60 ? ms : null;
+  }
+  function csvRows(text) {
+    const rows = []; let fields = [], value = '', quoted = false, line = 1, firstLine = 1;
+    for (let i = 0; i < text.length; i++) {
+      const c = text[i];
+      if (c === '"') {
+        if (quoted && text[i + 1] === '"') { value += '"'; i++; }
+        else if (quoted || value.length === 0) quoted = !quoted;
+        else throw new Error('Neplatné uvozovky v CSV na řádku ' + line);
+      } else if (c === ';' && !quoted) { fields.push(value); value = ''; }
+      else if (c === '\n' && !quoted) {
+        fields.push(value.replace(/\r$/, ''));
+        if (fields.some(v => v !== '')) rows.push({ fields, line: firstLine });
+        fields = []; value = ''; line++; firstLine = line;
+      } else { value += c; if (c === '\n') line++; }
+    }
+    if (quoted) throw new Error('Neukončené uvozovky v CSV');
+    if (value || fields.length) { fields.push(value.replace(/\r$/, '')); rows.push({ fields, line: firstLine }); }
+    return rows;
+  }
+  function parseLog(text, file) {
+    const rows = csvRows(text.replace(/^\uFEFF/, ''));
+    const header = ['Jméno pluginu', 'Čas deaktivace', 'Čas opětovné aktivace', 'Manuálně provedeno'];
+    if (!rows.length || JSON.stringify(rows[0].fields) !== JSON.stringify(header)) throw new Error('Neočekávaná hlavička: ' + file);
+    return rows.slice(1).map(({ fields: f, line }) => {
+      if (f.length !== 4) throw new Error('Očekávány 4 sloupce: ' + file + ':' + line);
+      const start = parseTime(f[1]), end = parseTime(f[2]);
+      const issues = [];
+      if (!f[0]) issues.push('Chybí plugin');
+      if (f[1] !== '-' && start === null) issues.push('Neplatný čas deaktivace');
+      if (f[2] !== '-' && end === null) issues.push('Neplatný čas aktivace');
+      if (!['ANO', 'NE'].includes(f[3])) issues.push('Neznámý způsob zásahu');
+      if (start !== null && end !== null && end < start) issues.push('Konec před začátkem');
+      return { id: file + ':' + line, file, line, raw: f, plugin: pluginName(f[0]),
+        start, end, eventTime: start === null ? end : start, manual: f[3] === 'ANO', issues };
+    });
+  }
+  const dateKey = ms => ms === null ? '' : new Date(ms).toISOString().slice(0, 10);
+  const rounded = ms => ms === null ? null : Math.floor((ms + 30000) / MINUTE) * MINUTE;
+  function clock(ms) { return ms === null ? '—' : new Date(rounded(ms)).toISOString().slice(11, 16); }
+  function unionMinutes(segments) {
+    if (!segments.length) return null;
+    let sum = 0, a = null, b = null;
+    for (const [start, end] of segments.slice().sort((x, y) => x[0] - y[0])) {
+      if (a === null) { a = start; b = end; }
+      else if (start <= b) b = Math.max(b, end);
+      else { sum += b - a; a = start; b = end; }
+    }
+    return (sum + b - a) / MINUTE;
+  }
+  function finish(g) {
+    g.date = dateKey(g.start === null ? g.end : g.start);
+    g.minutes = g.segments.length ? g.segments.reduce((sum, s) => sum + (s[1] - s[0]) / MINUTE, 0) : null;
+    g.unionMinutes = unionMinutes(g.segments);
+    g.spanMinutes = g.start !== null && g.end !== null ? (g.end - g.start) / MINUTE : null;
+    const dt = g.start === null ? null : new Date(rounded(g.start));
+    g.hour = dt ? dt.getUTCHours() : null;
+    g.startMinute = dt ? dt.getUTCMinutes() : null;
+    g.dayType = dt ? ((dt.getUTCHours() * 60 + dt.getUTCMinutes()) <= 300 ? 'noční výpadek' : 'denní výpadek') : 'neurčeno';
+    g.period = clock(g.start) + ' - ' + clock(g.end) + (g.start !== null && g.end !== null && dateKey(g.start) !== dateKey(g.end) ? ' (+další den)' : '');
+    return g;
+  }
+  function summary(raw, options) {
+    const opts = Object.assign({}, defaults, options);
+    if (!Number.isFinite(opts.gapMinutes) || opts.gapMinutes < 0 || opts.gapMinutes > 1440) throw new Error('Neplatný interval slučování');
+    if (!['start', 'end'].includes(opts.gapBasis) || typeof opts.sameDay !== 'boolean' || typeof opts.manualBarrier !== 'boolean') throw new Error('Neplatná pravidla slučování');
+    const result = [], perPlugin = new Map();
+    for (const r of raw) { if (!perPlugin.has(r.plugin)) perPlugin.set(r.plugin, []); perPlugin.get(r.plugin).push(r); }
+    for (const [plugin, records] of perPlugin) {
+      records.sort((a, b) => (a.eventTime ?? Infinity) - (b.eventTime ?? Infinity) || a.id.localeCompare(b.id));
+      const manualTimes = records.filter(r => r.manual && r.eventTime !== null).map(r => r.eventTime);
+      let current = null;
+      for (const r of records.filter(r => !r.manual)) {
+        if (r.issues.length || r.start === null || r.end === null) {
+          result.push(finish({ id: 'unknown:' + r.id, plugin, start: r.start, end: r.end, count: 0,
+            method: 'neurčeno', status: 'K ověření', members: [r.id], segments: [], issues: r.issues.concat('Neúplný automatický cyklus') }));
+          current = null; continue;
+        }
+        const previous = current ? (opts.gapBasis === 'end' ? current.end : current.lastStart) : null;
+        const barrier = current && opts.manualBarrier && manualTimes.some(t => t > current.lastStart && t <= r.start);
+        const join = current && (r.start - previous) / MINUTE <= opts.gapMinutes && !barrier && (!opts.sameDay || dateKey(r.start) === dateKey(current.start));
+        if (join) { current.end = Math.max(current.end, r.end); current.lastStart = r.start; current.count++; current.members.push(r.id); current.segments.push([r.start, r.end]); }
+        else {
+          current = { id: 'auto:' + r.id, plugin, start: r.start, end: r.end, lastStart: r.start, count: 1,
+            method: 'automatický', status: 'Plánovaný konec', members: [r.id], segments: [[r.start, r.end]], issues: [] };
+          result.push(current);
+        }
+      }
+      let pending = [];
+      for (const r of records.filter(r => r.manual)) {
+        const base = { id: 'manual:' + r.id, plugin, start: r.start, end: r.end, count: 0,
+          method: 'ruční', status: 'Doložené časy zásahu', members: [r.id], segments: [], issues: r.issues.slice() };
+        if (r.issues.length || (r.start === null && r.end === null)) { base.status = 'K ověření'; result.push(finish(base)); }
+        else if (r.start !== null && r.end !== null) { base.segments = [[r.start, r.end]]; result.push(finish(base)); }
+        else if (r.start !== null) { pending.push(base); }
+        else if (pending.length === 1) {
+          const open = pending.pop(); open.end = r.end; open.members.push(r.id); open.segments = [[open.start, r.end]]; result.push(finish(open));
+        } else {
+          base.status = pending.length ? 'Nejednoznačné párování' : 'Aktivace bez začátku';
+          base.issues.push(base.status); result.push(finish(base));
+          for (const open of pending) { open.status = 'Nejednoznačné párování'; open.issues.push(open.status); result.push(finish(open)); }
+          pending = [];
+        }
+      }
+      for (const open of pending) { open.status = 'Bez doloženého konce'; open.issues.push(open.status); result.push(finish(open)); }
+    }
+    for (const g of result) finish(g);
+    return result.sort((a, b) => (a.start ?? a.end ?? Infinity) - (b.start ?? b.end ?? Infinity) || a.plugin.localeCompare(b.plugin, 'cs'));
+  }
+  function csvField(v) { const s = v === null || v === undefined ? '' : String(v); return /[;"\r\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; }
+  const csvLine = row => row.map(csvField).join(';');
+  function rawCsv(raw) { return csvLine(['Jméno pluginu','Čas deaktivace','Čas opětovné aktivace','Manuálně provedeno']) + '\r\n' + raw.slice().sort((a,b)=>(a.eventTime ?? Infinity)-(b.eventTime ?? Infinity) || a.id.localeCompare(b.id)).map(r => csvLine(r.raw)).join('\r\n') + '\r\n'; }
+  function summaryCsv(rows) {
+    const number = n => n === null ? '' : String(Math.round(n * 100) / 100).replace('.', ',');
+    return csvLine(['Datum','Plugin','Počet timeoutů','Délka deaktivace','Začátek','Konec','Doba','Druh výpadku','Způsob','Důvod','Minuty (Začátek)','Hodiny (Začátek)']) + '\r\n' + rows.map(g => csvLine([
+      g.date ? g.date.split('-').reverse().join('.') : '', g.plugin, g.method === 'automatický' ? g.count : '', number(g.minutes),
+      clock(g.start), clock(g.end), g.period, g.dayType, g.method, '', g.startMinute ?? '', g.hour ?? ''
+    ])).join('\r\n') + '\r\n';
+  }
+  function isoWeek(date) {
+    if (!date) return 'neurčeno';
+    const d = new Date(date + 'T00:00:00Z'); d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+    const year = d.getUTCFullYear(); return year + '-W' + String(Math.ceil(((d - new Date(Date.UTC(year,0,1)))/DAY + 1)/7)).padStart(2,'0');
+  }
+  function dimension(g, key) {
+    if (key === 'date') return g.date || 'neurčeno';
+    if (key === 'month') return g.date ? g.date.slice(0,7) : 'neurčeno';
+    if (key === 'week') return isoWeek(g.date);
+    if (key === 'hour') return g.hour === null ? 'neurčeno' : String(g.hour).padStart(2,'0') + ':00';
+    if (key === 'period') return g.period;
+    return g[key] || 'neurčeno';
+  }
+  function measure(g, key) { return key === 'groups' ? 1 : key === 'cycles' ? g.count : g.minutes; }
+  function pivot(rows, rowFields, columnFields, metric) {
+    const map = new Map(), rowKeys = new Map(), columnKeys = new Map();
+    for (const g of rows) {
+      const r = rowFields.map(k=>dimension(g,k)), c = columnFields.map(k=>dimension(g,k));
+      const rk = JSON.stringify(r), ck = JSON.stringify(c), key = rk + '\t' + ck;
+      rowKeys.set(rk,r); columnKeys.set(ck,c);
+      if (!map.has(key)) map.set(key, { value: 0, unknown: 0 });
+      const value = measure(g,metric); const cell = map.get(key);
+      if (value === null) cell.unknown++; else cell.value += value;
+    }
+    const sort = entries => entries.sort((a,b)=>a[1].join('\t').localeCompare(b[1].join('\t'),'cs',{numeric:true}));
+    return { cells: map, rows: sort([...rowKeys]), columns: sort([...columnKeys]) };
+  }
+  function compareReference(groups, reference) {
+    const differences = [], matches = [], durationDifferences = [];
+    let durationCompared = 0;
+    for (const ref of reference) {
+      const start = Date.parse(ref.start + 'Z'), end = Date.parse(ref.end + 'Z');
+      const near = groups.filter(g => g.method === 'automatický' && g.plugin === ref.plugin && g.date === ref.date && Math.abs(g.start-start) <= 90000);
+      near.sort((a,b)=>Math.abs(a.end-end)-Math.abs(b.end-end)); const best = near[0];
+      const match = best && Math.abs(best.end-end) <= 90000 && best.count === ref.count;
+      const entry = { reference: ref, generated: best ? { id:best.id, start: best.start, end:best.end, count:best.count, minutes:best.minutes } : null };
+      (match ? matches : differences).push(entry);
+      if (match && Number.isFinite(ref.minutes)) {
+        durationCompared++;
+        if (Math.abs(best.minutes-ref.minutes) >= 0.1) durationDifferences.push(entry);
+      }
+    }
+    return { total: reference.length, matches: matches.length, differences, durationCompared, durationDifferences };
+  }
+  function rawDuration(row) { return Number.isFinite(row.start)&&Number.isFinite(row.end)&&row.end>=row.start?(row.end-row.start)/MINUTE:null; }
+  return { defaults, parseTime, csvRows, parseLog, summary, clock, dateKey, rawCsv, summaryCsv, pivot, dimension, measure, compareReference, rawDuration, MINUTE, DAY };
+});
+</script><script>window.V2_DATA={"schemaVersion":2,"environment":"DEMO","mode":"file","generatedUtc":"2026-10-07T07:00:00Z","previousRefreshUtc":"2026-10-06T07:00:00Z","sourceChecked":false,"rules":{"gapMinutes":20,"gapBasis":"start","sameDay":true,"manualBarrier":true},"files":[{"name":"2026-09_Deactivation.csv","rows":30,"bytes":1710,"sha256":"5db3c206c6366ed966b5019d46c731382f1bfaefdac6d17ed039f164a92d8326"},{"name":"2026-10_Deactivation.csv","rows":72,"bytes":3980,"sha256":"e69a6da57803bb34f6c3ff54539b301f8273a7d30a6d9a2da6225183282ddee7"}],"raw":[{"id":"2026-09_Deactivation.csv:2","file":"2026-09_Deactivation.csv","line":2,"raw":["LEPlugin","25.09.2026 02:31:00","25.09.2026 02:34:00","NE"],"plugin":"LE","start":1790303460000,"end":1790303640000,"eventTime":1790303460000,"manual":false,"issues":[],"isNew":false},{"id":"2026-09_Deactivation.csv:3","file":"2026-09_Deactivation.csv","line":3,"raw":["ZSSKPlugin","25.09.2026 13:20:00","25.09.2026 13:25:00","NE"],"plugin":"ZSSK","start":1790342400000,"end":1790342700000,"eventTime":1790342400000,"manual":false,"issues":[],"isNew":false},{"id":"2026-09_Deactivation.csv:4","file":"2026-09_Deactivation.csv","line":4,"raw":["ZSSKPlugin","25.09.2026 13:26:00","25.09.2026 13:31:00","NE"],"plugin":"ZSSK","start":1790342760000,"end":1790343060000,"eventTime":1790342760000,"manual":false,"issues":[],"isNew":false},{"id":"2026-09_Deactivation.csv:5","file":"2026-09_Deactivation.csv","line":5,"raw":["ZSSKPlugin","25.09.2026 13:32:00","25.09.2026 13:37:00","NE"],"plugin":"ZSSK","start":1790343120000,"end":1790343420000,"eventTime":1790343120000,"manual":false,"issues":[],"isNew":false},{"id":"2026-09_Deactivation.csv:6","file":"2026-09_Deactivation.csv","line":6,"raw":["RJPlugin","25.09.2026 17:45:00","25.09.2026 17:48:00","NE"],"plugin":"RJ","start":1790358300000,"end":1790358480000,"eventTime":1790358300000,"manual":false,"issues":[],"isNew":false},{"id":"2026-09_Deactivation.csv:7","file":"2026-09_Deactivation.csv","line":7,"raw":["LEPlugin","26.09.2026 02:31:00","26.09.2026 02:34:00","NE"],"plugin":"LE","start":1790389860000,"end":1790390040000,"eventTime":1790389860000,"manual":false,"issues":[],"isNew":false},{"id":"2026-09_Deactivation.csv:8","file":"2026-09_Deactivation.csv","line":8,"raw":["ZSSKPlugin","26.09.2026 13:20:00","26.09.2026 13:25:00","NE"],"plugin":"ZSSK","start":1790428800000,"end":1790429100000,"eventTime":1790428800000,"manual":false,"issues":[],"isNew":false},{"id":"2026-09_Deactivation.csv:9","file":"2026-09_Deactivation.csv","line":9,"raw":["ZSSKPlugin","26.09.2026 13:26:00","26.09.2026 13:31:00","NE"],"plugin":"ZSSK","start":1790429160000,"end":1790429460000,"eventTime":1790429160000,"manual":false,"issues":[],"isNew":false},{"id":"2026-09_Deactivation.csv:10","file":"2026-09_Deactivation.csv","line":10,"raw":["ZSSKPlugin","26.09.2026 13:32:00","26.09.2026 13:37:00","NE"],"plugin":"ZSSK","start":1790429520000,"end":1790429820000,"eventTime":1790429520000,"manual":false,"issues":[],"isNew":false},{"id":"2026-09_Deactivation.csv:11","file":"2026-09_Deactivation.csv","line":11,"raw":["ZSSKPlugin","26.09.2026 13:38:00","26.09.2026 13:43:00","NE"],"plugin":"ZSSK","start":1790429880000,"end":1790430180000,"eventTime":1790429880000,"manual":false,"issues":[],"isNew":false},{"id":"2026-09_Deactivation.csv:12","file":"2026-09_Deactivation.csv","line":12,"raw":["LEPlugin","27.09.2026 02:31:00","27.09.2026 02:34:00","NE"],"plugin":"LE","start":1790476260000,"end":1790476440000,"eventTime":1790476260000,"manual":false,"issues":[],"isNew":false},{"id":"2026-09_Deactivation.csv:13","file":"2026-09_Deactivation.csv","line":13,"raw":["ZSSKPlugin","27.09.2026 13:20:00","27.09.2026 13:25:00","NE"],"plugin":"ZSSK","start":1790515200000,"end":1790515500000,"eventTime":1790515200000,"manual":false,"issues":[],"isNew":false},{"id":"2026-09_Deactivation.csv:14","file":"2026-09_Deactivation.csv","line":14,"raw":["ZSSKPlugin","27.09.2026 13:26:00","27.09.2026 13:31:00","NE"],"plugin":"ZSSK","start":1790515560000,"end":1790515860000,"eventTime":1790515560000,"manual":false,"issues":[],"isNew":false},{"id":"2026-09_Deactivation.csv:15","file":"2026-09_Deactivation.csv","line":15,"raw":["ZSSKPlugin","27.09.2026 13:32:00","27.09.2026 13:37:00","NE"],"plugin":"ZSSK","start":1790515920000,"end":1790516220000,"eventTime":1790515920000,"manual":false,"issues":[],"isNew":false},{"id":"2026-09_Deactivation.csv:16","file":"2026-09_Deactivation.csv","line":16,"raw":["ZSSKPlugin","27.09.2026 13:38:00","27.09.2026 13:43:00","NE"],"plugin":"ZSSK","start":1790516280000,"end":1790516580000,"eventTime":1790516280000,"manual":false,"issues":[],"isNew":false},{"id":"2026-09_Deactivation.csv:17","file":"2026-09_Deactivation.csv","line":17,"raw":["ZSSKPlugin","27.09.2026 13:44:00","27.09.2026 13:49:00","NE"],"plugin":"ZSSK","start":1790516640000,"end":1790516940000,"eventTime":1790516640000,"manual":false,"issues":[],"isNew":false},{"id":"2026-09_Deactivation.csv:18","file":"2026-09_Deactivation.csv","line":18,"raw":["RJPlugin","27.09.2026 17:45:00","27.09.2026 17:48:00","NE"],"plugin":"RJ","start":1790531100000,"end":1790531280000,"eventTime":1790531100000,"manual":false,"issues":[],"isNew":false},{"id":"2026-09_Deactivation.csv:19","file":"2026-09_Deactivation.csv","line":19,"raw":["LEPlugin","28.09.2026 02:31:00","28.09.2026 02:34:00","NE"],"plugin":"LE","start":1790562660000,"end":1790562840000,"eventTime":1790562660000,"manual":false,"issues":[],"isNew":false},{"id":"2026-09_Deactivation.csv:20","file":"2026-09_Deactivation.csv","line":20,"raw":["ZSSKPlugin","28.09.2026 13:20:00","28.09.2026 13:25:00","NE"],"plugin":"ZSSK","start":1790601600000,"end":1790601900000,"eventTime":1790601600000,"manual":false,"issues":[],"isNew":false},{"id":"2026-09_Deactivation.csv:21","file":"2026-09_Deactivation.csv","line":21,"raw":["ZSSKPlugin","28.09.2026 13:26:00","28.09.2026 13:31:00","NE"],"plugin":"ZSSK","start":1790601960000,"end":1790602260000,"eventTime":1790601960000,"manual":false,"issues":[],"isNew":false},{"id":"2026-09_Deactivation.csv:22","file":"2026-09_Deactivation.csv","line":22,"raw":["LEPlugin","29.09.2026 02:31:00","29.09.2026 02:34:00","NE"],"plugin":"LE","start":1790649060000,"end":1790649240000,"eventTime":1790649060000,"manual":false,"issues":[],"isNew":false},{"id":"2026-09_Deactivation.csv:23","file":"2026-09_Deactivation.csv","line":23,"raw":["ZSSKPlugin","29.09.2026 13:20:00","29.09.2026 13:25:00","NE"],"plugin":"ZSSK","start":1790688000000,"end":1790688300000,"eventTime":1790688000000,"manual":false,"issues":[],"isNew":false},{"id":"2026-09_Deactivation.csv:24","file":"2026-09_Deactivation.csv","line":24,"raw":["ZSSKPlugin","29.09.2026 13:26:00","29.09.2026 13:31:00","NE"],"plugin":"ZSSK","start":1790688360000,"end":1790688660000,"eventTime":1790688360000,"manual":false,"issues":[],"isNew":false},{"id":"2026-09_Deactivation.csv:25","file":"2026-09_Deactivation.csv","line":25,"raw":["ZSSKPlugin","29.09.2026 13:32:00","29.09.2026 13:37:00","NE"],"plugin":"ZSSK","start":1790688720000,"end":1790689020000,"eventTime":1790688720000,"manual":false,"issues":[],"isNew":false},{"id":"2026-09_Deactivation.csv:26","file":"2026-09_Deactivation.csv","line":26,"raw":["RJPlugin","29.09.2026 17:45:00","29.09.2026 17:48:00","NE"],"plugin":"RJ","start":1790703900000,"end":1790704080000,"eventTime":1790703900000,"manual":false,"issues":[],"isNew":false},{"id":"2026-09_Deactivation.csv:27","file":"2026-09_Deactivation.csv","line":27,"raw":["LEPlugin","30.09.2026 02:31:00","30.09.2026 02:34:00","NE"],"plugin":"LE","start":1790735460000,"end":1790735640000,"eventTime":1790735460000,"manual":false,"issues":[],"isNew":false},{"id":"2026-09_Deactivation.csv:28","file":"2026-09_Deactivation.csv","line":28,"raw":["ZSSKPlugin","30.09.2026 13:20:00","30.09.2026 13:25:00","NE"],"plugin":"ZSSK","start":1790774400000,"end":1790774700000,"eventTime":1790774400000,"manual":false,"issues":[],"isNew":false},{"id":"2026-09_Deactivation.csv:29","file":"2026-09_Deactivation.csv","line":29,"raw":["ZSSKPlugin","30.09.2026 13:26:00","30.09.2026 13:31:00","NE"],"plugin":"ZSSK","start":1790774760000,"end":1790775060000,"eventTime":1790774760000,"manual":false,"issues":[],"isNew":false},{"id":"2026-09_Deactivation.csv:30","file":"2026-09_Deactivation.csv","line":30,"raw":["ZSSKPlugin","30.09.2026 13:32:00","30.09.2026 13:37:00","NE"],"plugin":"ZSSK","start":1790775120000,"end":1790775420000,"eventTime":1790775120000,"manual":false,"issues":[],"isNew":false},{"id":"2026-09_Deactivation.csv:31","file":"2026-09_Deactivation.csv","line":31,"raw":["ZSSKPlugin","30.09.2026 13:38:00","30.09.2026 13:43:00","NE"],"plugin":"ZSSK","start":1790775480000,"end":1790775780000,"eventTime":1790775480000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:2","file":"2026-10_Deactivation.csv","line":2,"raw":["LEPlugin","01.10.2026 02:31:00","01.10.2026 02:34:00","NE"],"plugin":"LE","start":1790821860000,"end":1790822040000,"eventTime":1790821860000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:3","file":"2026-10_Deactivation.csv","line":3,"raw":["ZSSKPlugin","01.10.2026 12:40:00","01.10.2026 12:45:00","NE"],"plugin":"ZSSK","start":1790858400000,"end":1790858700000,"eventTime":1790858400000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:4","file":"2026-10_Deactivation.csv","line":4,"raw":["ZSSKPlugin","01.10.2026 12:46:00","01.10.2026 12:51:00","NE"],"plugin":"ZSSK","start":1790858760000,"end":1790859060000,"eventTime":1790858760000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:5","file":"2026-10_Deactivation.csv","line":5,"raw":["ZSSKPlugin","01.10.2026 12:52:00","01.10.2026 12:57:00","NE"],"plugin":"ZSSK","start":1790859120000,"end":1790859420000,"eventTime":1790859120000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:6","file":"2026-10_Deactivation.csv","line":6,"raw":["ZSSKPlugin","01.10.2026 12:58:00","01.10.2026 13:03:00","NE"],"plugin":"ZSSK","start":1790859480000,"end":1790859780000,"eventTime":1790859480000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:7","file":"2026-10_Deactivation.csv","line":7,"raw":["ZSSKPlugin","01.10.2026 13:04:00","01.10.2026 13:09:00","NE"],"plugin":"ZSSK","start":1790859840000,"end":1790860140000,"eventTime":1790859840000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:8","file":"2026-10_Deactivation.csv","line":8,"raw":["ZSSKPlugin","01.10.2026 13:10:00","01.10.2026 13:15:00","NE"],"plugin":"ZSSK","start":1790860200000,"end":1790860500000,"eventTime":1790860200000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:9","file":"2026-10_Deactivation.csv","line":9,"raw":["ZSSKPlugin","01.10.2026 13:16:00","01.10.2026 13:21:00","NE"],"plugin":"ZSSK","start":1790860560000,"end":1790860860000,"eventTime":1790860560000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:10","file":"2026-10_Deactivation.csv","line":10,"raw":["ZSSKPlugin","01.10.2026 13:22:00","01.10.2026 13:27:00","NE"],"plugin":"ZSSK","start":1790860920000,"end":1790861220000,"eventTime":1790860920000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:11","file":"2026-10_Deactivation.csv","line":11,"raw":["CDPlugin","01.10.2026 18:10:00","01.10.2026 18:13:00","NE"],"plugin":"ČD","start":1790878200000,"end":1790878380000,"eventTime":1790878200000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:12","file":"2026-10_Deactivation.csv","line":12,"raw":["LEPlugin","02.10.2026 02:31:00","02.10.2026 02:34:00","NE"],"plugin":"LE","start":1790908260000,"end":1790908440000,"eventTime":1790908260000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:27","file":"2026-10_Deactivation.csv","line":27,"raw":["ARVPlugin","02.10.2026 07:20:00","02.10.2026 07:23:00","NE"],"plugin":"ARV","start":1790925600000,"end":1790925780000,"eventTime":1790925600000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:28","file":"2026-10_Deactivation.csv","line":28,"raw":["ARVPlugin","02.10.2026 07:26:00","02.10.2026 07:29:00","NE"],"plugin":"ARV","start":1790925960000,"end":1790926140000,"eventTime":1790925960000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:13","file":"2026-10_Deactivation.csv","line":13,"raw":["ZSSKPlugin","02.10.2026 12:40:00","02.10.2026 12:45:00","NE"],"plugin":"ZSSK","start":1790944800000,"end":1790945100000,"eventTime":1790944800000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:14","file":"2026-10_Deactivation.csv","line":14,"raw":["ZSSKPlugin","02.10.2026 12:46:00","02.10.2026 12:51:00","NE"],"plugin":"ZSSK","start":1790945160000,"end":1790945460000,"eventTime":1790945160000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:15","file":"2026-10_Deactivation.csv","line":15,"raw":["ZSSKPlugin","02.10.2026 12:52:00","02.10.2026 12:57:00","NE"],"plugin":"ZSSK","start":1790945520000,"end":1790945820000,"eventTime":1790945520000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:16","file":"2026-10_Deactivation.csv","line":16,"raw":["ZSSKPlugin","02.10.2026 12:58:00","02.10.2026 13:03:00","NE"],"plugin":"ZSSK","start":1790945880000,"end":1790946180000,"eventTime":1790945880000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:17","file":"2026-10_Deactivation.csv","line":17,"raw":["ZSSKPlugin","02.10.2026 13:04:00","02.10.2026 13:09:00","NE"],"plugin":"ZSSK","start":1790946240000,"end":1790946540000,"eventTime":1790946240000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:18","file":"2026-10_Deactivation.csv","line":18,"raw":["ZSSKPlugin","02.10.2026 13:10:00","02.10.2026 13:15:00","NE"],"plugin":"ZSSK","start":1790946600000,"end":1790946900000,"eventTime":1790946600000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:19","file":"2026-10_Deactivation.csv","line":19,"raw":["ZSSKPlugin","02.10.2026 13:16:00","02.10.2026 13:21:00","NE"],"plugin":"ZSSK","start":1790946960000,"end":1790947260000,"eventTime":1790946960000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:20","file":"2026-10_Deactivation.csv","line":20,"raw":["ZSSKPlugin","02.10.2026 13:22:00","02.10.2026 13:27:00","NE"],"plugin":"ZSSK","start":1790947320000,"end":1790947620000,"eventTime":1790947320000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:21","file":"2026-10_Deactivation.csv","line":21,"raw":["ZSSKPlugin","02.10.2026 13:28:00","02.10.2026 13:33:00","NE"],"plugin":"ZSSK","start":1790947680000,"end":1790947980000,"eventTime":1790947680000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:22","file":"2026-10_Deactivation.csv","line":22,"raw":["ZSSKPlugin","02.10.2026 13:34:00","02.10.2026 13:39:00","NE"],"plugin":"ZSSK","start":1790948040000,"end":1790948340000,"eventTime":1790948040000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:23","file":"2026-10_Deactivation.csv","line":23,"raw":["ZSSKPlugin","02.10.2026 13:40:00","02.10.2026 13:45:00","NE"],"plugin":"ZSSK","start":1790948400000,"end":1790948700000,"eventTime":1790948400000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:24","file":"2026-10_Deactivation.csv","line":24,"raw":["ZSSKPlugin","02.10.2026 13:46:00","02.10.2026 13:51:00","NE"],"plugin":"ZSSK","start":1790948760000,"end":1790949060000,"eventTime":1790948760000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:25","file":"2026-10_Deactivation.csv","line":25,"raw":["ZSSKPlugin","02.10.2026 13:52:00","02.10.2026 13:57:00","NE"],"plugin":"ZSSK","start":1790949120000,"end":1790949420000,"eventTime":1790949120000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:26","file":"2026-10_Deactivation.csv","line":26,"raw":["ZSSKPlugin","02.10.2026 13:58:00","02.10.2026 14:03:00","NE"],"plugin":"ZSSK","start":1790949480000,"end":1790949780000,"eventTime":1790949480000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:29","file":"2026-10_Deactivation.csv","line":29,"raw":["LEPlugin","03.10.2026 02:31:00","03.10.2026 02:34:00","NE"],"plugin":"LE","start":1790994660000,"end":1790994840000,"eventTime":1790994660000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:33","file":"2026-10_Deactivation.csv","line":33,"raw":["RJPlugin","03.10.2026 09:15:00","03.10.2026 09:18:00","NE"],"plugin":"RJ","start":1791018900000,"end":1791019080000,"eventTime":1791018900000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:34","file":"2026-10_Deactivation.csv","line":34,"raw":["RJPlugin","03.10.2026 09:23:00","03.10.2026 09:26:00","NE"],"plugin":"RJ","start":1791019380000,"end":1791019560000,"eventTime":1791019380000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:35","file":"2026-10_Deactivation.csv","line":35,"raw":["RJPlugin","03.10.2026 09:31:00","03.10.2026 09:34:00","NE"],"plugin":"RJ","start":1791019860000,"end":1791020040000,"eventTime":1791019860000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:30","file":"2026-10_Deactivation.csv","line":30,"raw":["ZSSKPlugin","03.10.2026 12:40:00","03.10.2026 12:45:00","NE"],"plugin":"ZSSK","start":1791031200000,"end":1791031500000,"eventTime":1791031200000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:31","file":"2026-10_Deactivation.csv","line":31,"raw":["ZSSKPlugin","03.10.2026 12:46:00","03.10.2026 12:51:00","NE"],"plugin":"ZSSK","start":1791031560000,"end":1791031860000,"eventTime":1791031560000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:32","file":"2026-10_Deactivation.csv","line":32,"raw":["CDPlugin","03.10.2026 18:10:00","03.10.2026 18:13:00","NE"],"plugin":"ČD","start":1791051000000,"end":1791051180000,"eventTime":1791051000000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:36","file":"2026-10_Deactivation.csv","line":36,"raw":["LEPlugin","04.10.2026 02:31:00","04.10.2026 02:34:00","NE"],"plugin":"LE","start":1791081060000,"end":1791081240000,"eventTime":1791081060000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:37","file":"2026-10_Deactivation.csv","line":37,"raw":["ZSSKPlugin","04.10.2026 12:40:00","04.10.2026 12:45:00","NE"],"plugin":"ZSSK","start":1791117600000,"end":1791117900000,"eventTime":1791117600000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:38","file":"2026-10_Deactivation.csv","line":38,"raw":["ZSSKPlugin","04.10.2026 12:46:00","04.10.2026 12:51:00","NE"],"plugin":"ZSSK","start":1791117960000,"end":1791118260000,"eventTime":1791117960000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:39","file":"2026-10_Deactivation.csv","line":39,"raw":["ZSSKPlugin","04.10.2026 12:52:00","04.10.2026 12:57:00","NE"],"plugin":"ZSSK","start":1791118320000,"end":1791118620000,"eventTime":1791118320000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:40","file":"2026-10_Deactivation.csv","line":40,"raw":["ZSSKPlugin","04.10.2026 12:58:00","04.10.2026 13:03:00","NE"],"plugin":"ZSSK","start":1791118680000,"end":1791118980000,"eventTime":1791118680000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:41","file":"2026-10_Deactivation.csv","line":41,"raw":["ZSSKPlugin","04.10.2026 13:04:00","04.10.2026 13:09:00","NE"],"plugin":"ZSSK","start":1791119040000,"end":1791119340000,"eventTime":1791119040000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:42","file":"2026-10_Deactivation.csv","line":42,"raw":["ZSSKPlugin","04.10.2026 13:10:00","04.10.2026 13:15:00","NE"],"plugin":"ZSSK","start":1791119400000,"end":1791119700000,"eventTime":1791119400000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:43","file":"2026-10_Deactivation.csv","line":43,"raw":["DUKPlugin","04.10.2026 14:25:00","04.10.2026 14:28:00","NE"],"plugin":"DÚK","start":1791123900000,"end":1791124080000,"eventTime":1791123900000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:44","file":"2026-10_Deactivation.csv","line":44,"raw":["LEPlugin","05.10.2026 02:31:00","05.10.2026 02:34:00","NE"],"plugin":"LE","start":1791167460000,"end":1791167640000,"eventTime":1791167460000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:50","file":"2026-10_Deactivation.csv","line":50,"raw":["ARVPlugin","05.10.2026 07:20:00","05.10.2026 07:23:00","NE"],"plugin":"ARV","start":1791184800000,"end":1791184980000,"eventTime":1791184800000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:51","file":"2026-10_Deactivation.csv","line":51,"raw":["ARVPlugin","05.10.2026 07:26:00","05.10.2026 07:29:00","NE"],"plugin":"ARV","start":1791185160000,"end":1791185340000,"eventTime":1791185160000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:45","file":"2026-10_Deactivation.csv","line":45,"raw":["ZSSKPlugin","05.10.2026 12:40:00","05.10.2026 12:45:00","NE"],"plugin":"ZSSK","start":1791204000000,"end":1791204300000,"eventTime":1791204000000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:46","file":"2026-10_Deactivation.csv","line":46,"raw":["ZSSKPlugin","05.10.2026 12:46:00","05.10.2026 12:51:00","NE"],"plugin":"ZSSK","start":1791204360000,"end":1791204660000,"eventTime":1791204360000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:47","file":"2026-10_Deactivation.csv","line":47,"raw":["ZSSKPlugin","05.10.2026 12:52:00","05.10.2026 12:57:00","NE"],"plugin":"ZSSK","start":1791204720000,"end":1791205020000,"eventTime":1791204720000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:48","file":"2026-10_Deactivation.csv","line":48,"raw":["ZSSKPlugin","05.10.2026 12:58:00","05.10.2026 13:03:00","NE"],"plugin":"ZSSK","start":1791205080000,"end":1791205380000,"eventTime":1791205080000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:72","file":"2026-10_Deactivation.csv","line":72,"raw":["FBPlugin","05.10.2026 16:20:00","-","ANO"],"plugin":"FB","start":1791217200000,"end":null,"eventTime":1791217200000,"manual":true,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:49","file":"2026-10_Deactivation.csv","line":49,"raw":["CDPlugin","05.10.2026 18:10:00","05.10.2026 18:13:00","NE"],"plugin":"ČD","start":1791223800000,"end":1791223980000,"eventTime":1791223800000,"manual":false,"issues":[],"isNew":false},{"id":"2026-10_Deactivation.csv:52","file":"2026-10_Deactivation.csv","line":52,"raw":["LEPlugin","06.10.2026 02:31:00","06.10.2026 02:34:00","NE"],"plugin":"LE","start":1791253860000,"end":1791254040000,"eventTime":1791253860000,"manual":false,"issues":[],"isNew":true},{"id":"2026-10_Deactivation.csv:63","file":"2026-10_Deactivation.csv","line":63,"raw":["RJPlugin","06.10.2026 09:15:00","06.10.2026 09:18:00","NE"],"plugin":"RJ","start":1791278100000,"end":1791278280000,"eventTime":1791278100000,"manual":false,"issues":[],"isNew":true},{"id":"2026-10_Deactivation.csv:64","file":"2026-10_Deactivation.csv","line":64,"raw":["RJPlugin","06.10.2026 09:23:00","06.10.2026 09:26:00","NE"],"plugin":"RJ","start":1791278580000,"end":1791278760000,"eventTime":1791278580000,"manual":false,"issues":[],"isNew":true},{"id":"2026-10_Deactivation.csv:65","file":"2026-10_Deactivation.csv","line":65,"raw":["RJPlugin","06.10.2026 09:31:00","06.10.2026 09:34:00","NE"],"plugin":"RJ","start":1791279060000,"end":1791279240000,"eventTime":1791279060000,"manual":false,"issues":[],"isNew":true},{"id":"2026-10_Deactivation.csv:66","file":"2026-10_Deactivation.csv","line":66,"raw":["AMSPlugin","06.10.2026 10:15:00","06.10.2026 10:33:00","ANO"],"plugin":"AMS","start":1791281700000,"end":1791282780000,"eventTime":1791281700000,"manual":true,"issues":[],"isNew":true},{"id":"2026-10_Deactivation.csv:53","file":"2026-10_Deactivation.csv","line":53,"raw":["ZSSKPlugin","06.10.2026 12:40:00","06.10.2026 12:45:00","NE"],"plugin":"ZSSK","start":1791290400000,"end":1791290700000,"eventTime":1791290400000,"manual":false,"issues":[],"isNew":true},{"id":"2026-10_Deactivation.csv:54","file":"2026-10_Deactivation.csv","line":54,"raw":["ZSSKPlugin","06.10.2026 12:46:00","06.10.2026 12:51:00","NE"],"plugin":"ZSSK","start":1791290760000,"end":1791291060000,"eventTime":1791290760000,"manual":false,"issues":[],"isNew":true},{"id":"2026-10_Deactivation.csv:55","file":"2026-10_Deactivation.csv","line":55,"raw":["ZSSKPlugin","06.10.2026 12:52:00","06.10.2026 12:57:00","NE"],"plugin":"ZSSK","start":1791291120000,"end":1791291420000,"eventTime":1791291120000,"manual":false,"issues":[],"isNew":true},{"id":"2026-10_Deactivation.csv:56","file":"2026-10_Deactivation.csv","line":56,"raw":["ZSSKPlugin","06.10.2026 12:58:00","06.10.2026 13:03:00","NE"],"plugin":"ZSSK","start":1791291480000,"end":1791291780000,"eventTime":1791291480000,"manual":false,"issues":[],"isNew":true},{"id":"2026-10_Deactivation.csv:57","file":"2026-10_Deactivation.csv","line":57,"raw":["ZSSKPlugin","06.10.2026 13:04:00","06.10.2026 13:09:00","NE"],"plugin":"ZSSK","start":1791291840000,"end":1791292140000,"eventTime":1791291840000,"manual":false,"issues":[],"isNew":true},{"id":"2026-10_Deactivation.csv:58","file":"2026-10_Deactivation.csv","line":58,"raw":["ZSSKPlugin","06.10.2026 13:10:00","06.10.2026 13:15:00","NE"],"plugin":"ZSSK","start":1791292200000,"end":1791292500000,"eventTime":1791292200000,"manual":false,"issues":[],"isNew":true},{"id":"2026-10_Deactivation.csv:59","file":"2026-10_Deactivation.csv","line":59,"raw":["ZSSKPlugin","06.10.2026 13:16:00","06.10.2026 13:21:00","NE"],"plugin":"ZSSK","start":1791292560000,"end":1791292860000,"eventTime":1791292560000,"manual":false,"issues":[],"isNew":true},{"id":"2026-10_Deactivation.csv:60","file":"2026-10_Deactivation.csv","line":60,"raw":["ZSSKPlugin","06.10.2026 13:22:00","06.10.2026 13:27:00","NE"],"plugin":"ZSSK","start":1791292920000,"end":1791293220000,"eventTime":1791292920000,"manual":false,"issues":[],"isNew":true},{"id":"2026-10_Deactivation.csv:61","file":"2026-10_Deactivation.csv","line":61,"raw":["ZSSKPlugin","06.10.2026 13:28:00","06.10.2026 13:33:00","NE"],"plugin":"ZSSK","start":1791293280000,"end":1791293580000,"eventTime":1791293280000,"manual":false,"issues":[],"isNew":true},{"id":"2026-10_Deactivation.csv:62","file":"2026-10_Deactivation.csv","line":62,"raw":["ZSSKPlugin","06.10.2026 13:34:00","06.10.2026 13:39:00","NE"],"plugin":"ZSSK","start":1791293640000,"end":1791293940000,"eventTime":1791293640000,"manual":false,"issues":[],"isNew":true},{"id":"2026-10_Deactivation.csv:73","file":"2026-10_Deactivation.csv","line":73,"raw":["ZSSKPlugin","06.10.2026 23:58:00","07.10.2026 00:03:00","NE"],"plugin":"ZSSK","start":1791331080000,"end":1791331380000,"eventTime":1791331080000,"manual":false,"issues":[],"isNew":true},{"id":"2026-10_Deactivation.csv:67","file":"2026-10_Deactivation.csv","line":67,"raw":["LEPlugin","07.10.2026 02:31:00","07.10.2026 02:34:00","NE"],"plugin":"LE","start":1791340260000,"end":1791340440000,"eventTime":1791340260000,"manual":false,"issues":[],"isNew":true},{"id":"2026-10_Deactivation.csv:68","file":"2026-10_Deactivation.csv","line":68,"raw":["ZSSKPlugin","07.10.2026 12:40:00","07.10.2026 12:45:00","NE"],"plugin":"ZSSK","start":1791376800000,"end":1791377100000,"eventTime":1791376800000,"manual":false,"issues":[],"isNew":true},{"id":"2026-10_Deactivation.csv:69","file":"2026-10_Deactivation.csv","line":69,"raw":["ZSSKPlugin","07.10.2026 12:46:00","07.10.2026 12:51:00","NE"],"plugin":"ZSSK","start":1791377160000,"end":1791377460000,"eventTime":1791377160000,"manual":false,"issues":[],"isNew":true},{"id":"2026-10_Deactivation.csv:70","file":"2026-10_Deactivation.csv","line":70,"raw":["ZSSKPlugin","07.10.2026 12:52:00","07.10.2026 12:57:00","NE"],"plugin":"ZSSK","start":1791377520000,"end":1791377820000,"eventTime":1791377520000,"manual":false,"issues":[],"isNew":true},{"id":"2026-10_Deactivation.csv:71","file":"2026-10_Deactivation.csv","line":71,"raw":["CDPlugin","07.10.2026 18:10:00","07.10.2026 18:13:00","NE"],"plugin":"ČD","start":1791396600000,"end":1791396780000,"eventTime":1791396600000,"manual":false,"issues":[],"isNew":true}],"newCount":21,"removedCount":0,"firstDate":"2026-09-25","lastDate":"2026-10-07"};window.V2_RUNTIME={"mode":"file","token":null};</script><script>(function(){
+  'use strict';
+  const M=window.DeactivationModel,R=window.V2_RUNTIME,$=id=>document.getElementById(id);
+  let D=window.V2_DATA,page=0,summaryPage=0,summaryRows=[],groups=[],chosen=new Set(),plugins=[],visible=[],pivot=null;
+  const expanded=new Set(),size=200;
+  let recentBounds={from:'',to:''};
+  const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const num=n=>new Intl.NumberFormat('cs-CZ',{maximumFractionDigits:2}).format(n);
+  const date=d=>d?d.split('-').reverse().join('.'):'neurčeno';
+  const stamp=t=>new Date(t).toLocaleString('cs-CZ',{timeZone:'Europe/Prague',dateStyle:'short',timeStyle:'short'});
+  const unit=()=>({minutes:'min',cycles:'cyklů',groups:'záznamů'}[$('metric').value]);
+  function today(){const p=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Prague',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date()),v=Object.fromEntries(p.map(x=>[x.type,x.value]));return v.year+'-'+v.month+'-'+v.day;}
+  function recent(r){const day=M.dateKey(r.eventTime);return Boolean(day)&&day>=recentBounds.from&&day<=recentBounds.to;}
+  function notify(message,error=false){$('notification').hidden=false;$('notification').textContent=message;$('notification').className=error?'error':'';}
+  function tsv(rows){const cell=v=>{const s=String(v??'');return /[\t\n\r"]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s;};return rows.map(row=>row.map(cell).join('\t')).join('\r\n');}
+  async function copy(text){const field=$('copy-fallback');field.hidden=false;field.value=text;
+    try{if(!navigator.clipboard)throw new Error();await navigator.clipboard.writeText(text);notify('V Excelu vlož pomocí Ctrl+V. Text pro ruční kopírování je také v poli dole.');}
+    catch(e){field.focus();field.select();notify('Text je označený v poli dole. Použij Ctrl+C, v Excelu Ctrl+V.');}}
+  function rawExportRows(){return [['Jméno pluginu','Čas deaktivace','Čas opětovné aktivace','Manuálně provedeno','Délka deaktivace (min)'],...D.raw.map(r=>[...r.raw,M.rawDuration(r)===null?'':String(Math.round(M.rawDuration(r)*100)/100).replace('.',',')])];}
+  function rawTsv(){return tsv(rawExportRows());}
+  function rawExportCsv(){return rawExportRows().map(row=>row.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(';')).join('\r\n');}
+  function showRaw(){
+    const currentDay=today();recentBounds={from:M.dateKey(Date.parse(currentDay+'T00:00:00Z')-2*M.DAY),to:currentDay};
+    const kind=$('raw-filter').value;
+    const numbered=D.raw.map((r,i)=>({r,index:i+1}));
+    const rows=numbered.filter(({r})=>kind==='all'||kind==='new'&&r.isNew||kind==='recent'&&recent(r)).sort((a,b)=>(b.r.eventTime??-Infinity)-(a.r.eventTime??-Infinity)||b.index-a.index);
+    const pages=Math.max(1,Math.ceil(rows.length/size));page=Math.min(page,pages-1);
+    $('new-count').textContent=num(D.newCount);$('recent-count').textContent=num(D.raw.filter(recent).length);
+    const from=M.dateKey(Date.parse(today()+'T00:00:00Z')-2*M.DAY);$('recent-caption').textContent='Poslední 3 dny ('+date(from).slice(0,5)+'–'+date(today()).slice(0,5)+')';
+    const header='<thead><tr class="letters"><th class="corner"></th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th></tr><tr class="titles"><th class="corner"></th>'+['Jméno pluginu','Čas deaktivace','Čas opětovné aktivace','Manuálně','Délka deaktivace (min)'].map(s=>'<th>'+s+'</th>').join('')+'</tr></thead>';
+    $('raw-table').innerHTML=rows.length?'<table class="sheet">'+header+'<tbody>'+rows.slice(page*size,(page+1)*size).map(({r,index})=>'<tr class="'+(r.isNew?'new ':'')+(recent(r)?'recent':'')+'" title="'+esc(r.id)+'"><th class="row-number">'+index+'</th>'+r.raw.map((value,i)=>'<td>'+esc(value)+(i===0&&r.isNew?'<span class="new-badge">nové</span>':'')+'</td>').join('')+'<td class="duration">'+(M.rawDuration(r)===null?'—':num(M.rawDuration(r)))+'</td></tr>').join('')+'</tbody></table>':'<p class="empty">'+(kind==='new'?'Od předchozí aktualizace nepřibyly nové řádky.':'Pro tento výběr nejsou žádné řádky.')+'</p>';
+    $('raw-count').textContent=num(rows.length)+' / '+num(D.raw.length)+' řádků';$('page-label').textContent=(page+1)+' / '+pages;
+    $('prev').disabled=page===0;$('next').disabled=page>=pages-1;
+  }
+  function range(period=$('period').value){const last=D.lastDate;
+    if(period==='all')return ['', '9999-12-31'];
+    if(period==='recent')return [M.dateKey(Date.parse(today()+'T00:00:00Z')-2*M.DAY),today()];
+    if(period==='previous'){const d=new Date(last+'T00:00:00Z');d.setUTCDate(0);const end=M.dateKey(d.getTime());return [end.slice(0,7)+'-01',end];}
+    return [last.slice(0,7)+'-01',last];
+  }
+  function summaryExportRows(){return M.csvRows(M.summaryCsv(summaryRows)).map(r=>r.fields.slice(0,10));}
+  function showSummary(){
+    const bounds=range($('summary-period').value),plugin=$('summary-plugin').value;
+    summaryRows=groups.filter(g=>(!plugin||g.plugin===plugin)&&(!g.date||g.date>=bounds[0]&&g.date<=bounds[1])).sort((a,b)=>(b.start??b.end??-Infinity)-(a.start??a.end??-Infinity)||a.plugin.localeCompare(b.plugin,'cs'));
+    const pages=Math.max(1,Math.ceil(summaryRows.length/size));summaryPage=Math.min(summaryPage,pages-1);
+    const rawById=new Map(D.raw.map(r=>[r.id,r])),exported=summaryExportRows();
+    const headers=['Datum','Plugin','Počet timeoutů','Délka deaktivace (min)','Začátek','Konec','Doba','Druh výpadku','Způsob','Důvod'];
+    const head='<thead><tr class="letters"><th class="corner"></th>'+['A','B','C','D','E','F','G','H','I','J'].map(c=>'<th>'+c+'</th>').join('')+'</tr><tr class="titles"><th class="corner"></th>'+headers.map(c=>'<th>'+c+'</th>').join('')+'</tr></thead>';
+    $('summary-table').innerHTML=summaryRows.length?'<table class="sheet summary-sheet">'+head+'<tbody>'+summaryRows.slice(summaryPage*size,(summaryPage+1)*size).map((g,i)=>{
+      const index=summaryPage*size+i,isNew=g.members.some(id=>rawById.get(id)?.isNew),day=g.date,isRecent=day&&day>=recentBounds.from&&day<=recentBounds.to;
+      return '<tr class="'+(isNew?'new ':'')+(isRecent?'recent':'')+'" title="'+esc(g.members.join(', '))+'"><th class="row-number">'+(index+1)+'</th>'+exported[index+1].map((v,col)=>'<td class="'+([2,3].includes(col)?'duration':'')+'">'+esc(col===3&&v===''?'—':v)+'</td>').join('')+'</tr>';
+    }).join('')+'</tbody></table>':'<p class="empty">Pro tento výběr nejsou žádné souhrnné záznamy.</p>';
+    $('summary-count').textContent=num(summaryRows.length)+' souhrnů · '+num(summaryRows.reduce((s,g)=>s+(g.minutes??0),0))+' min'+(summaryRows.some(g=>g.minutes===null)?' · obsahuje neznámé délky':'');
+    $('summary-page').textContent=(summaryPage+1)+' / '+pages;$('summary-prev').disabled=summaryPage===0;$('summary-next').disabled=summaryPage>=pages-1;
+  }
+  const value=cell=>!cell?'—':num(cell.value)+(cell.unknown?' + ?':'');
+  function shade(cell,max){const strength=cell&&cell.value>0?Math.max(.06,cell.value/max*.72):0;return 'background:rgba(1,113,186,'+strength+');color:'+(strength>.49?'#fff':'var(--idos-text)');}
+  function sum(cells){return cells.reduce((s,c)=>({value:s.value+(c?.value||0),unknown:s.unknown+(c?.unknown||0)}),{value:0,unknown:0});}
+  function showPivot(){
+    const [from,to]=range(),metric=$('metric').value;
+    visible=groups.filter(g=>chosen.has(g.plugin)&&(!g.date||g.date>=from&&g.date<=to));
+    pivot=M.pivot(visible,['date'],['plugin'],metric);
+    $('pivot-count').textContent=num(visible.length)+' souhrnů · '+unit();$('heat-unit').textContent=unit();
+    const max=Math.max(1,...[...pivot.cells.values()].map(c=>c.value));
+    const totals=pivot.columns.map(([ck])=>sum(pivot.rows.map(([rk])=>pivot.cells.get(rk+'\t'+ck))));
+    const child=M.pivot(visible,['date','period'],['plugin'],metric);
+    let html='<table class="pivot"><thead><tr><th>Datum</th>'+pivot.columns.map(([,c])=>'<th>'+esc(c[0])+'</th>').join('')+'<th>Celkem</th></tr></thead><tbody>';
+    for(const [rk,row] of pivot.rows){const cells=pivot.columns.map(([ck])=>pivot.cells.get(rk+'\t'+ck)),day=row[0];
+      html+='<tr><td><button class="date-button" data-day="'+esc(day)+'" aria-expanded="'+expanded.has(day)+'">'+(expanded.has(day)?'−':'＋')+' '+date(day==='neurčeno'?'':day)+'</button></td>'+cells.map(c=>'<td style="'+shade(c,max)+'">'+value(c)+'</td>').join('')+'<td class="sum">'+value(sum(cells))+'</td></tr>';
+      if(expanded.has(day))for(const [key,labels]of child.rows.filter(([,r])=>r[0]===day)){const cc=pivot.columns.map(([ck])=>child.cells.get(key+'\t'+ck));html+='<tr class="child"><td>'+esc(labels[1])+'</td>'+cc.map(c=>'<td>'+value(c)+'</td>').join('')+'<td class="sum">'+value(sum(cc))+'</td></tr>';}
+    }
+    html+='<tr class="total-row"><th>Celkem</th>'+totals.map(c=>'<td>'+value(c)+'</td>').join('')+'<td>'+value(sum(totals))+'</td></tr></tbody></table>';
+    $('pivot-table').innerHTML=visible.length?html:'<p class="empty">Pro vybrané období a pluginy nejsou žádné záznamy.</p>';
+    $('pivot-table').querySelectorAll('[data-day]').forEach(button=>button.onclick=()=>{const d=button.dataset.day;if(expanded.has(d))expanded.delete(d);else expanded.add(d);showPivot();});
+    showHeatmap();
+    $('rules-note').textContent='Slučování: '+D.rules.gapMinutes+' minut '+(D.rules.gapBasis==='start'?'mezi začátky cyklů.':'od konce k dalšímu začátku.')+' Minuty v heatmapě vycházejí z jednotlivých intervalů; mezery mezi cykly se nepřičítají. Hodiny jsou podle časů v logu.';
+  }
+  function showHeatmap(){const matrix=Array.from({length:7},()=>Array(24).fill(0)),key=$('metric').value,rawById=new Map(D.raw.map(r=>[r.id,r]));
+    function add(at,n){const d=new Date(at);matrix[(d.getUTCDay()+6)%7][d.getUTCHours()]+=n;}
+    for(const g of visible){if(key==='groups'){const at=g.start??g.end;if(at!==null)add(at,1);}
+      else if(key==='cycles'){for(const id of g.members){const r=rawById.get(id);if(!r.manual&&r.start!==null&&r.end!==null&&!r.issues.length)add(r.start,1);}}
+      else for(const [start,end]of g.segments){let at=start;while(at<end){const next=Math.min(end,(Math.floor(at/3600000)+1)*3600000);add(at,(next-at)/M.MINUTE);at=next;}}}
+    const max=Math.max(1,...matrix.flat()),days=['Po','Út','St','Čt','Pá','So','Ne'];
+    $('heatmap').innerHTML='<table class="heatmap"><thead><tr><th></th>'+Array.from({length:24},(_,h)=>'<th>'+String(h).padStart(2,'0')+'</th>').join('')+'</tr></thead><tbody>'+matrix.map((row,d)=>'<tr><th>'+days[d]+'</th>'+row.map((n,h)=>'<td style="'+shade({value:n},max)+'" title="'+days[d]+' '+h+':00 · '+num(n)+' '+unit()+'">'+(n?num(n):'·')+'</td>').join('')+'</tr>').join('')+'</tbody></table>';
+  }
+  function pivotTsv(){const totals=pivot.columns.map(([ck])=>sum(pivot.rows.map(([rk])=>pivot.cells.get(rk+'\t'+ck))));
+    return tsv([['Datum',...pivot.columns.map(([,c])=>c[0]),'Celkem'],...pivot.rows.map(([rk,r])=>{const cells=pivot.columns.map(([ck])=>pivot.cells.get(rk+'\t'+ck));return [date(r[0]==='neurčeno'?'':r[0]),...cells.map(value),value(sum(cells))];}),['Celkem',...totals.map(value),value(sum(totals))]]);
+  }
+  function rebuild(){const wasAll=chosen.size===plugins.length,old=chosen;
+    document.querySelector('.eyebrow').textContent='PROVOZNÍ DOHLED · V2'+(D.environment==='TEST'?' · TEST':'');
+    plugins=[...new Set(D.raw.map(r=>r.plugin))].sort((a,b)=>a.localeCompare(b,'cs'));chosen=new Set(plugins.filter(p=>wasAll||old.has(p)));
+    $('plugins').innerHTML=plugins.map(p=>'<label><input type="checkbox" value="'+esc(p)+'" '+(chosen.has(p)?'checked':'')+'>'+esc(p)+'</label>').join('');
+    $('plugins').querySelectorAll('input').forEach(input=>input.onchange=()=>{if(input.checked)chosen.add(input.value);else chosen.delete(input.value);showPivot();});
+    const summaryPlugin=$('summary-plugin').value;$('summary-plugin').innerHTML='<option value="">Všechny pluginy</option>'+plugins.map(p=>'<option value="'+esc(p)+'">'+esc(p)+'</option>').join('');if(plugins.includes(summaryPlugin))$('summary-plugin').value=summaryPlugin;
+    groups=M.summary(D.raw,D.rules);page=0;summaryPage=0;showRaw();showSummary();showPivot();
+    $('source-meta').textContent=D.files.length+' měsíčních CSV · '+num(D.raw.length)+' řádků · aktualizováno '+stamp(D.generatedUtc);
+    $('refresh-mode').textContent=R.mode==='prod'?(D.sourceChecked?'Zdroj: PROD DEMO':'Lokální kopie · aktualizuj z PROD'):R.mode==='fixture'?'Místní testovací zdroj':'Náhled z místních kopií';
+    $('refresh').textContent=R.mode==='prod'?'Stáhnout z PROD':'Aktualizovat místní data';
+    if(R.mode==='file'){$('refresh').hidden=true;$('refresh-mode').textContent='Mock · vzorová data';}
+  }
+  document.querySelectorAll('[data-panel]').forEach(button=>button.onclick=()=>{document.querySelectorAll('[data-panel]').forEach(b=>b.setAttribute('aria-selected',String(b===button)));for(const id of ['data','summary','pivot'])$('panel-'+id).hidden=button.dataset.panel!==id;});
+  $('raw-filter').onchange=()=>{page=0;showRaw();};$('prev').onclick=()=>{page--;showRaw();};$('next').onclick=()=>{page++;showRaw();};
+  for(const id of ['summary-period','summary-plugin'])$(id).onchange=()=>{summaryPage=0;showSummary();};$('summary-prev').onclick=()=>{summaryPage--;showSummary();};$('summary-next').onclick=()=>{summaryPage++;showSummary();};
+  for(const id of ['period','metric'])$(id).onchange=()=>{expanded.clear();showPivot();};
+  function allPlugins(enabled){chosen=enabled?new Set(plugins):new Set();$('plugins').querySelectorAll('input').forEach(input=>{input.checked=enabled;});showPivot();}
+  $('plugins-all').onclick=()=>allPlugins(true);$('plugins-none').onclick=()=>allPlugins(false);
+  $('copy-raw').onclick=()=>copy(rawTsv());$('copy-pivot').onclick=()=>copy(pivotTsv());
+  $('copy-summary').onclick=()=>copy(tsv(summaryExportRows()));
+  $('download-summary').onclick=()=>{const text='\ufeff'+summaryExportRows().map(row=>row.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(';')).join('\r\n'),blob=new Blob([text],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='deaktivace-souhrn.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),60000);$('copy-fallback').hidden=false;$('copy-fallback').value=text;notify('Připraven CSV souhrn ve stejných deseti sloupcích jako Excel.');};
+  $('download-raw').onclick=()=>{const text='\ufeff'+rawExportCsv(),blob=new Blob([text],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='deaktivace-surova-data.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),60000);$('copy-fallback').hidden=false;$('copy-fallback').value=text;notify('Připraveno CSV se všemi řádky a vypočtenou délkou. Obsah je také v poli dole ke kopírování.');};
+  rebuild();
+})();
+</script></body></html>
